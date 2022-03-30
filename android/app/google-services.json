@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "246456436510",
+    "project_id": "thirsty-cce9c",
+    "storage_bucket": "thirsty-cce9c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:246456436510:android:c2f868bbc9b92a976aeb0f",
+        "android_client_info": {
+          "package_name": "com.shootingDragon.thirsty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "246456436510-e708di2a6fqeerem0jcrk86k14qkvccq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxOOJjC-mQVr4Lcfy76bYWg5p6PHcVflA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "246456436510-e708di2a6fqeerem0jcrk86k14qkvccq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:thristy/utils/constants.dart';
-import 'package:flutter/cupertino.dart';
 
 class StatsScreen extends StatelessWidget {
   const StatsScreen({Key? key}) : super(key: key);
@@ -10,8 +9,8 @@ class StatsScreen extends StatelessWidget {
     return Center(
       child: Card(
         shadowColor: kLightBlue,
-        color: Colors.black,
-        elevation: 18,
+        elevation: 1,
+        color: const Color(0xFF0a0a0a),
         margin: const EdgeInsets.symmetric(vertical: 15),
         child: Padding(
           padding: const EdgeInsets.all(10.0),

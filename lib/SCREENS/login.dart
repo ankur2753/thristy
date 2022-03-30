@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:thristy/SERVICES/auth.dart';
 import 'package:thristy/utils/constants.dart';
 import 'package:thristy/SCREENS/home.dart';
 
@@ -117,6 +118,8 @@ class _LoginState extends State<LoginPage> {
         splashColor: kLightBlue,
         child: const Icon(Icons.navigate_next),
         onPressed: () {
+          AuthService _auth = AuthService();
+          _auth.anonmusSignIN();
           Navigator.pushReplacement(
               context, CupertinoPageRoute(builder: (context) => const Home()));
         },

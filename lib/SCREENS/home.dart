@@ -22,10 +22,9 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Hi username")),
       body: _containers.elementAt(_selectedPage),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black,
+        backgroundColor: const Color(0xFF0E0E10),
         showUnselectedLabels: false,
         currentIndex: _selectedPage,
         selectedItemColor: kLightBlue,

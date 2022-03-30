@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import './constants.dart';
 
 ThemeData myTheme = ThemeData.dark().copyWith(
-  scaffoldBackgroundColor: Colors.black,
-  backgroundColor: Colors.black,
+  scaffoldBackgroundColor: const Color(0xFF0E0E10),
+  backgroundColor: const Color(0xFF0E0E10),
   appBarTheme:
       const AppBarTheme(centerTitle: true, backgroundColor: Colors.black),
   colorScheme: const ColorScheme(
@@ -11,7 +11,7 @@ ThemeData myTheme = ThemeData.dark().copyWith(
     primary: kNavyBlue,
     secondary: kNavyBlue,
     error: red,
-    background: Colors.black,
+    background: Color(0xFF0E0E10),
     surface: kSand,
     onPrimary: kSand,
     onSecondary: kWhiteBlue,
