@@ -40,12 +40,6 @@ class _HomeState extends State<Home> {
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
         ],
       ),
-      floatingActionButton: _selectedPage != 2
-          ? const SizedBox()
-          : FloatingActionButton(
-              onPressed: () {},
-              child: const Icon(Icons.edit),
-            ),
     );
   }
 }

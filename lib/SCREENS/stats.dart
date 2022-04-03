@@ -8,7 +8,7 @@ class StatsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Card(
-        shadowColor: kLightBlue,
+        shadowColor: kNavyBlue,
         elevation: 1,
         color: const Color(0xFF0a0a0a),
         margin: const EdgeInsets.symmetric(vertical: 15),
