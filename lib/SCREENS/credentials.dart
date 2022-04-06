@@ -80,7 +80,7 @@ class _CredentialsScreenState extends State<CredentialsScreen> {
                             Provider.of<AuthServiceProvider>(context,
                                 listen: false);
                         await provider.signInWithPassword(
-                            email.text, password.text);
+                            email.text.trim(), password.text.trim());
                         Navigator.pushAndRemoveUntil(
                             context,
                             CupertinoPageRoute(

@@ -31,7 +31,7 @@ class BigButton extends StatelessWidget {
 
 class BigButtonWithIcon extends StatelessWidget {
   final Function onPressed;
-  final Icon buttonIcon;
+  final Widget buttonIcon;
   final Widget buttonLable;
   final bool isCTA;
   const BigButtonWithIcon(

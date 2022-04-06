@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:thristy/SCREENS/address.dart';
 import 'package:thristy/SCREENS/login.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -62,9 +63,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           title: Text("Your Orders"),
           trailing: Icon(Icons.navigate_next),
         ),
-        const ListTile(
-          title: Text("Address Book"),
-          trailing: Icon(Icons.navigate_next),
+        ListTile(
+          title: const Text("Address Book"),
+          trailing: const Icon(Icons.navigate_next),
+          onTap: () {
+            Navigator.push(context,
+                CupertinoPageRoute(builder: (builder) => AddressBook()));
+          },
         ),
         const ListTile(
           title: Text("Favourites"),

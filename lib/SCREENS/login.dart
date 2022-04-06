@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:thristy/SCREENS/home.dart';
 import 'package:thristy/SCREENS/signup.dart';
@@ -41,7 +42,7 @@ class _LoginState extends State<LoginPage> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  BigButton(
+                  BigButtonWithIcon(
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -49,7 +50,8 @@ class _LoginState extends State<LoginPage> {
                               builder: (builder) => const CredentialsScreen()),
                         );
                       },
-                      buttonChild: const Text("Login with ID Password"),
+                      buttonLable: const Text("Login with ID Password"),
+                      buttonIcon: const FaIcon(FontAwesomeIcons.userLock),
                       isCTA: true),
                   BigButtonWithIcon(
                     onPressed: () async {
@@ -59,13 +61,14 @@ class _LoginState extends State<LoginPage> {
                       await provider.signInWithGoogle();
                     },
                     buttonLable: const Text("Login With Google"),
-                    buttonIcon: const Icon(Icons.g_mobiledata_rounded),
+                    buttonIcon:
+                        const FaIcon(FontAwesomeIcons.google, color: kNavyBlue),
                     isCTA: false,
                   ),
                   BigButtonWithIcon(
                     onPressed: () {},
                     buttonLable: const Text("Login with Phone"),
-                    buttonIcon: const Icon(Icons.phone),
+                    buttonIcon: const Icon(Icons.phone, color: kNavyBlue),
                     isCTA: false,
                   ),
                   const Text("or"),
