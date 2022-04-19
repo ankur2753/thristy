@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:thristy/utils/button_component.dart';
+import 'package:thristy/utils/constants.dart';
 import 'package:thristy/utils/input_component.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -9,53 +12,58 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final TextEditingController name = TextEditingController();
-  final TextEditingController phone = TextEditingController();
   final TextEditingController email = TextEditingController();
-
+  final TextEditingController password = TextEditingController();
+  final TextEditingController rePass = TextEditingController();
+  bool _isAgreed = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text("Sign Up"),
+      ),
       body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
-            Text(
-              "Sign Up ",
-              style: Theme.of(context).textTheme.displayMedium,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text("Looks like you don't Have an Account."),
-                  Text("Let's get you a brand new one,"),
-                  Text(
-                      "You can easily create one by filling in the following details"),
-                ],
-              ),
-            ),
-            InputSection(
-              controller: name,
-              descriptor: "Name",
-              prefixIcon: const Icon(Icons.person),
-            ),
-            InputSection(
-              controller: phone,
-              descriptor: "Phone No",
-              prefixIcon: const Icon(Icons.phone),
-            ),
+            BigButtonWithIcon(
+                onPressed: () {},
+                buttonIcon: const FaIcon(FontAwesomeIcons.google),
+                buttonLable: const Text("Sign Up with Google"),
+                isCTA: false),
+            const Divider(thickness: 4),
             InputSection(
               controller: email,
               descriptor: "Email",
-              prefixIcon: const Icon(Icons.alternate_email),
             ),
+            InputSection(
+              controller: password,
+              descriptor: "Password",
+            ),
+            InputSection(
+              controller: rePass,
+              descriptor: "Confirm Password",
+            ),
+            CheckboxListTile(
+                title: const Text("I agree With big Terms and policies "),
+                value: _isAgreed,
+                onChanged: (bool? newVal) {
+                  setState(() {
+                    _isAgreed = newVal ?? false;
+                  });
+                })
           ]),
       floatingActionButton: FloatingActionButton(
-          onPressed: () {}, child: const Icon(Icons.navigate_next)),
+        onPressed: _isAgreed
+            ? () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("button Pressed")),
+                );
+              }
+            : null,
+        child: const Icon(Icons.navigate_next),
+        backgroundColor: _isAgreed ? kLightBlue : kWhiteBlue,
+      ),
     );
   }
 }

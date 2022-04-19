@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:thristy/SCREENS/address.dart';
+import 'package:thristy/SCREENS/address_book.dart';
 import 'package:thristy/SCREENS/login.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:thristy/SCREENS/your_orders.dart';
 import 'package:thristy/SERVICES/auth.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -59,16 +60,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
           title: const Text("Email Id"),
           subtitle: Text(kek.email ?? "Email@id Not found"),
         ),
-        const ListTile(
-          title: Text("Your Orders"),
-          trailing: Icon(Icons.navigate_next),
+        ListTile(
+          title: const Text("Your Orders"),
+          trailing: const Icon(Icons.navigate_next),
+          onTap: () {
+            Navigator.push(
+                context,
+                CupertinoPageRoute(
+                    builder: (builder) => const YourOrdersScreen()));
+          },
         ),
         ListTile(
           title: const Text("Address Book"),
           trailing: const Icon(Icons.navigate_next),
           onTap: () {
             Navigator.push(context,
-                CupertinoPageRoute(builder: (builder) => AddressBook()));
+                CupertinoPageRoute(builder: (builder) => const AddressBook()));
           },
         ),
         const ListTile(
@@ -84,7 +91,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           trailing: Icon(Icons.navigate_next),
         ),
         const ListTile(
-          title: Text("Send Feedbank"),
+          title: Text("Send Feedback"),
           trailing: Icon(Icons.navigate_next),
         ),
         const ListTile(

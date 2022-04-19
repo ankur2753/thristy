@@ -4,11 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthServiceProvider extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn googleSignIn = GoogleSignIn();
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   Future<bool> signInWithPassword(String email, String password) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
+      notifyListeners();
       return Future.value(true);
     } catch (e) {
       return Future.error(e);
@@ -17,7 +18,7 @@ class AuthServiceProvider extends ChangeNotifier {
 
   Future<bool> signInWithGoogle() async {
     try {
-      final GoogleSignInAccount? googlAccount = await googleSignIn.signIn();
+      final GoogleSignInAccount? googlAccount = await _googleSignIn.signIn();
       final googleAuth = await googlAccount!.authentication;
       final OAuthCredential creds = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
@@ -35,9 +36,10 @@ class AuthServiceProvider extends ChangeNotifier {
     try {
       User user = FirebaseAuth.instance.currentUser!;
       if (user.providerData.first.providerId == 'google.com') {
-        await googleSignIn.disconnect();
+        await _googleSignIn.disconnect();
       }
       await _auth.signOut();
+      notifyListeners();
       return Future.value(true);
     } catch (e) {
       return Future.error(e);
