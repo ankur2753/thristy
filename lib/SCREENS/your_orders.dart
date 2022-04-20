@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:thristy/SERVICES/database.dart';
 import 'package:thristy/utils/button_component.dart';
 import 'package:thristy/utils/constants.dart';
 
@@ -16,6 +18,7 @@ class YourOrdersScreen extends StatelessWidget {
     Text("You Don't Have an Order Yet,"),
     Text("Try Ordering First"),
   ];
+  // TODO: implement firebase logic here
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +26,10 @@ class YourOrdersScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Order History"),
       ),
-      body: Center(
-          child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (true)
-            ...noOrders
-          else
-            ListView.builder(
+      body: StreamBuilder(
+          stream: Provider.of<DatabaseServiesProvider>(context).getOrders(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            return ListView.builder(
               itemCount: 10,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
@@ -52,9 +51,8 @@ class YourOrdersScreen extends StatelessWidget {
                   ),
                 );
               },
-            ),
-        ],
-      )),
+            );
+          }),
     );
   }
 }

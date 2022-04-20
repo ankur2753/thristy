@@ -1,3 +1,6 @@
+import 'dart:ffi';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -44,5 +47,13 @@ class AuthServiceProvider extends ChangeNotifier {
     } catch (e) {
       return Future.error(e);
     }
+  }
+
+  // TODO:SET USER TYPE FUNCTION
+  Future setUserType(bool isCustomer) async {
+    await FirebaseFirestore.instance
+        .collection('usersMetadata')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .set({'isCustomer': isCustomer});
   }
 }

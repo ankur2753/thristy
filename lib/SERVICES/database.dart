@@ -3,11 +3,28 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 class DatabaseServiesProvider extends ChangeNotifier {
-  final CollectionReference _db = FirebaseFirestore.instance.collection('user');
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
   final User _user = FirebaseAuth.instance.currentUser!;
 
-  // user -> customers  -> userID -> addressBook
-  // user  -> sellers   -> UserID -> addressBook
+  Future editPhone(String phone) async {
+    _db.collection('userMetadata').doc(_user.uid).update({'phone no': phone});
+  }
+
+  Stream<DocumentSnapshot> getOrders() {
+    return _db.collection('orders').doc(_user.uid).snapshots();
+  }
+
+  Future<bool> newOrder() async {
+    try {
+      await _db.collection('orders').doc(_user.uid).set(
+        {Timestamp.now().toString(): {}},
+        SetOptions(merge: true),
+      );
+      return Future.value(true);
+    } catch (e) {
+      return Future.value(false);
+    }
+  }
 
   Future<bool> addAddress({
     required String title,
@@ -16,9 +33,7 @@ class DatabaseServiesProvider extends ChangeNotifier {
     String? floor,
   }) async {
     try {
-      CollectionReference userCollection =
-          _db.doc('customers').collection(_user.uid);
-      await userCollection.doc('addressBook').set(
+      await _db.collection('addressBook').doc(_user.uid).set(
         {
           title: {
             'Complete Address': completeAddress,
@@ -36,20 +51,12 @@ class DatabaseServiesProvider extends ChangeNotifier {
   }
 
   Stream<DocumentSnapshot> getAddress() {
-    CollectionReference userCollection =
-        _db.doc('customers').collection(_user.uid);
-    DocumentReference doc = userCollection.doc('addressBook');
-    Stream<DocumentSnapshot> snapshots = doc.snapshots();
-
-    return snapshots;
+    return _db.collection('addressBook').doc(_user.uid).snapshots();
   }
 
   Future<bool> deleteAddress(String title) async {
     try {
-      CollectionReference userCollection =
-          _db.doc('customers').collection(_user.uid);
-
-      userCollection.doc('addressBook').update({
+      _db.collection('addressBook').doc(_user.uid).update({
         title: FieldValue.delete(),
       });
       return Future.value(true);
