@@ -6,9 +6,20 @@ class DatabaseServiesProvider extends ChangeNotifier {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   final User _user = FirebaseAuth.instance.currentUser!;
 
+  // USER PROFILE
+
+  Future setUserType({required bool isCustomer}) async {
+    _db
+        .collection('usersMetadata')
+        .doc(_user.uid)
+        .set({'isCustomer': isCustomer}, SetOptions(merge: true));
+  }
+
   Future editPhone(String phone) async {
     _db.collection('userMetadata').doc(_user.uid).update({'phone no': phone});
   }
+
+  // ORDERS SECTION
 
   Stream<DocumentSnapshot> getOrders() {
     return _db.collection('orders').doc(_user.uid).snapshots();
@@ -25,6 +36,8 @@ class DatabaseServiesProvider extends ChangeNotifier {
       return Future.value(false);
     }
   }
+
+  // ADDRESS SECTION
 
   Future<bool> addAddress({
     required String title,
@@ -63,5 +76,10 @@ class DatabaseServiesProvider extends ChangeNotifier {
     } catch (e) {
       return Future.value(false);
     }
+  }
+  // SELLERS SECTION
+
+  Stream<DocumentSnapshot> getSellers() {
+    return _db.collection('sellers').doc('sellersList').snapshots();
   }
 }

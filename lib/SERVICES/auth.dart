@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -9,17 +7,26 @@ class AuthServiceProvider extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-  Future<bool> signInWithPassword(String email, String password) async {
+  Future verifyEmail(String email) async {}
+
+  Future<UserCredential> addUser(String email, String password) async {
+    return await _auth.createUserWithEmailAndPassword(
+        email: email, password: password);
+  }
+
+  Future signInWithPassword(String email, String password) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       notifyListeners();
       return Future.value(true);
+    } on FirebaseAuthException {
+      rethrow;
     } catch (e) {
-      return Future.error(e);
+      return Future.value(e.toString());
     }
   }
 
-  Future<bool> signInWithGoogle() async {
+  Future<UserCredential> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googlAccount = await _googleSignIn.signIn();
       final googleAuth = await googlAccount!.authentication;
@@ -27,11 +34,12 @@ class AuthServiceProvider extends ChangeNotifier {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      await FirebaseAuth.instance.signInWithCredential(creds);
+      UserCredential user =
+          await FirebaseAuth.instance.signInWithCredential(creds);
       notifyListeners();
-      return Future.value(true);
-    } on FirebaseAuthException catch (error) {
-      return Future.error(error);
+      return Future.value(user);
+    } on FirebaseAuthException {
+      rethrow;
     }
   }
 
@@ -54,6 +62,13 @@ class AuthServiceProvider extends ChangeNotifier {
     await FirebaseFirestore.instance
         .collection('usersMetadata')
         .doc(FirebaseAuth.instance.currentUser!.uid)
-        .set({'isCustomer': isCustomer});
+        .update({'isCustomer': isCustomer});
+  }
+
+  Future emailVerified(bool isEmailVerified) async {
+    await FirebaseFirestore.instance
+        .collection('usersMetadata')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update({'isEmailVerified': isEmailVerified});
   }
 }

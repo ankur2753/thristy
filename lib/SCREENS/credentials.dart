@@ -57,6 +57,7 @@ class _CredentialsScreenState extends State<CredentialsScreen> {
                     controller: password,
                     keyboardType: TextInputType.name,
                     textInputAction: TextInputAction.done,
+                    obscureText: true,
                     decoration: const InputDecoration(
                       label: Text("Password"),
                       prefixIcon: Icon(Icons.lock),
@@ -91,7 +92,11 @@ class _CredentialsScreenState extends State<CredentialsScreen> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(
-                            error.message.toString(),
+                            error.code
+                                .toString()
+                                .split("-")
+                                .join(' ')
+                                .toUpperCase(),
                           ),
                         ),
                       );

@@ -1,11 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:thristy/SCREENS/address_book.dart';
+import 'package:thristy/SCREENS/become_seller.dart';
 import 'package:thristy/SCREENS/login.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:thristy/SCREENS/your_orders.dart';
 import 'package:thristy/SERVICES/auth.dart';
+import 'package:animations/animations.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -85,6 +87,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         const ListTile(
           title: Text("Manage Notifications"),
           trailing: Icon(Icons.navigate_next),
+        ),
+        ListTile(
+          title: const Text("Become a Seller"),
+          trailing: const Icon(Icons.navigate_next),
+          onTap: () {
+            Navigator.push(context,
+                CupertinoPageRoute(builder: (contex) => const BecomeSeller()));
+          },
         ),
         const ListTile(
           title: Text("Help"),

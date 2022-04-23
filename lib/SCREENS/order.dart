@@ -1,41 +1,67 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:thristy/SERVICES/database.dart';
 
 class OrderScreen extends StatelessWidget {
   const OrderScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: 5,
-        itemBuilder: (BuildContext ctx, int index) {
-          return const SellerCard();
+    return StreamBuilder(
+        stream: Provider.of<DatabaseServiesProvider>(context).getSellers(),
+        builder: (BuildContext ctx, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          Map sellersList = snapshot.data!.data() as Map<String, dynamic>;
+          return ListView.builder(
+            itemCount: sellersList.length,
+            itemBuilder: (BuildContext ctx, int index) {
+              MapEntry seller = sellersList.entries.elementAt(index);
+              return SellerCard(
+                src: "${seller.value['photoUrl']}",
+                location: "kirlosakr",
+                rating: seller.value['rating'],
+                nameOfSeller: seller.key.toString(),
+              );
+            },
+          );
         });
   }
 }
 
 class SellerCard extends StatelessWidget {
+  final String src;
+  final String nameOfSeller;
+  final String location;
+  final double rating;
   const SellerCard({
     Key? key,
+    required this.src,
+    required this.nameOfSeller,
+    required this.location,
+    required this.rating,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Card(
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         children: [
-          Image.network("https://picsum.photos/400/200"),
-          const ListTile(
-            title: Text("Name of the seller"),
-            subtitle: Text("Location of the seller"),
-            trailing: Text("4.3/5"),
+          Image.network(
+            src,
+            fit: BoxFit.cover,
           ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: const [Icon(Icons.favorite), Icon(Icons.share)],
-          )
+          ListTile(
+            title: Text(nameOfSeller),
+            subtitle: Text(location),
+            trailing: Text(rating.toString() + "/5"),
+          ),
         ],
       ),
     );

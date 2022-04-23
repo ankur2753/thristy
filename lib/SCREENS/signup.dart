@@ -1,5 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:thristy/SCREENS/home.dart';
+import 'package:thristy/SERVICES/auth.dart';
+import 'package:thristy/SERVICES/database.dart';
 import 'package:thristy/utils/button_component.dart';
 import 'package:thristy/utils/constants.dart';
 import 'package:thristy/utils/input_component.dart';
@@ -14,7 +20,7 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
-  final TextEditingController rePass = TextEditingController();
+  final TextEditingController name = TextEditingController();
   bool _isAgreed = false;
   @override
   Widget build(BuildContext context) {
@@ -26,25 +32,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
-            BigButtonWithIcon(
-                onPressed: () {},
-                buttonIcon: const FaIcon(FontAwesomeIcons.google),
-                buttonLable: const Text("Sign Up with Google"),
-                isCTA: false),
-            const Divider(thickness: 4),
+            InputSection(
+              controller: name,
+              descriptor: "Name",
+            ),
             InputSection(
               controller: email,
-              descriptor: "Email",
+              descriptor: "Email ID",
             ),
             InputSection(
               controller: password,
               descriptor: "Password",
-            ),
-            InputSection(
-              controller: rePass,
-              descriptor: "Confirm Password",
+              isPasword: true,
             ),
             CheckboxListTile(
+                activeColor: kNavyBlue,
                 title: const Text("I agree With big Terms and policies "),
                 value: _isAgreed,
                 onChanged: (bool? newVal) {
@@ -54,15 +56,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 })
           ]),
       floatingActionButton: FloatingActionButton(
-        onPressed: _isAgreed
-            ? () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("button Pressed")),
-                );
-              }
-            : null,
+        onPressed: () async {
+          if (!_isAgreed) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("Agree to proceed"),
+              ),
+            );
+          }
+          try {
+            UserCredential userCreds =
+                await Provider.of<AuthServiceProvider>(context, listen: false)
+                    .addUser(email.text, password.text);
+            userCreds.user!.updateDisplayName(name.text);
+            await Provider.of<DatabaseServiesProvider>(context, listen: false)
+                .setUserType(isCustomer: true);
+            await Provider.of<AuthServiceProvider>(context, listen: false)
+                .emailVerified(false);
+            Navigator.pushReplacement(
+                context,
+                CupertinoPageRoute(
+                    builder: (BuildContext context) => const Home()));
+          } on FirebaseAuthException catch (e) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  e.code.toString().split("-").join(" ").toUpperCase(),
+                ),
+              ),
+            );
+          }
+        },
         child: const Icon(Icons.navigate_next),
-        backgroundColor: _isAgreed ? kLightBlue : kWhiteBlue,
+        elevation: 20,
+        disabledElevation: 2,
       ),
     );
   }

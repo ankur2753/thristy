@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -14,13 +13,19 @@ class AddAddress extends StatefulWidget {
 }
 
 class _AddAddressState extends State<AddAddress> {
-  User currUser = FirebaseAuth.instance.currentUser!;
-  CollectionReference userCollection =
-      FirebaseFirestore.instance.collection('user');
   TextEditingController complete = TextEditingController();
   TextEditingController name = TextEditingController();
   TextEditingController landmark = TextEditingController();
   TextEditingController floor = TextEditingController();
+  @override
+  void dispose() {
+    super.dispose();
+    complete.dispose();
+    name.dispose();
+    landmark.dispose();
+    floor.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

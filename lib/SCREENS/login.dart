@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:thristy/SCREENS/home.dart';
 import 'package:thristy/SCREENS/signup.dart';
 import 'package:thristy/SERVICES/auth.dart';
+import 'package:thristy/SERVICES/database.dart';
 import 'package:thristy/utils/constants.dart';
 import 'package:thristy/SCREENS/credentials.dart';
 import 'package:thristy/utils/button_component.dart';
@@ -38,6 +39,7 @@ class _LoginState extends State<LoginPage> {
           ),
           body: Center(
             child: SingleChildScrollView(
+              // TODO:ADD BACKGROUND IMAGE
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -55,20 +57,19 @@ class _LoginState extends State<LoginPage> {
                       isCTA: true),
                   BigButtonWithIcon(
                     onPressed: () async {
-                      final AuthServiceProvider provider =
+                      final AuthServiceProvider auth =
                           Provider.of<AuthServiceProvider>(context,
                               listen: false);
-                      await provider.signInWithGoogle();
+                      UserCredential user = await auth.signInWithGoogle();
+                      if (user.additionalUserInfo!.isNewUser) {
+                        Provider.of<DatabaseServiesProvider>(context,
+                                listen: false)
+                            .setUserType(isCustomer: true);
+                      }
                     },
                     buttonLable: const Text("Login With Google"),
                     buttonIcon:
                         const FaIcon(FontAwesomeIcons.google, color: kNavyBlue),
-                    isCTA: false,
-                  ),
-                  BigButtonWithIcon(
-                    onPressed: () {},
-                    buttonLable: const Text("Login with Phone"),
-                    buttonIcon: const Icon(Icons.phone, color: kNavyBlue),
                     isCTA: false,
                   ),
                   const Text("or"),
