@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:thristy/SERVICES/auth.dart';
 import 'package:thristy/SERVICES/database.dart';
+import 'package:thristy/SERVICES/storage.dart';
 import 'firebase_options.dart';
 import 'SCREENS/login.dart';
 import './utils/themes.dart';
@@ -26,10 +27,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => AuthServiceProvider(),
-        ),
-        ChangeNotifierProvider(create: (context) => DatabaseServiesProvider())
+        ChangeNotifierProvider(create: (context) => AuthServiceProvider()),
+        ChangeNotifierProvider(create: (context) => DatabaseServiesProvider()),
+        ChangeNotifierProvider(create: (context) => StorageServicesProvider()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

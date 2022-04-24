@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:thristy/SERVICES/database.dart';
+import 'package:thristy/utils/constants.dart';
 
 class OrderScreen extends StatelessWidget {
   const OrderScreen({Key? key}) : super(key: key);
@@ -53,9 +53,26 @@ class SellerCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: Column(
         children: [
-          Image.network(
-            src,
-            fit: BoxFit.cover,
+          SizedBox(
+            height: 200,
+            width: double.infinity,
+            child: Image.network(
+              src,
+              fit: BoxFit.cover,
+              loadingBuilder:
+                  (BuildContext ctx, Widget child, ImageChunkEvent? progress) {
+                if (progress == null) {
+                  return child;
+                }
+                return const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Center(
+                      child: LinearProgressIndicator(
+                    color: kWhiteBlue,
+                  )),
+                );
+              },
+            ),
           ),
           ListTile(
             title: Text(nameOfSeller),

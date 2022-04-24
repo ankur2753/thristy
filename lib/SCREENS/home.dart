@@ -24,21 +24,22 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageTransitionSwitcher(
-          reverse: true,
-          transitionBuilder: (
-            Widget child,
-            Animation<double> primaryAnimation,
-            Animation<double> secondaryAnimation,
-          ) {
-            return SharedAxisTransition(
-              fillColor: const Color(0xFF0E0E10),
-              animation: primaryAnimation,
-              secondaryAnimation: secondaryAnimation,
-              transitionType: SharedAxisTransitionType.horizontal,
-              child: child,
-            );
-          },
-          child: _containers.elementAt(_selectedPage)),
+        reverse: true,
+        transitionBuilder: (
+          Widget child,
+          Animation<double> primaryAnimation,
+          Animation<double> secondaryAnimation,
+        ) {
+          return SharedAxisTransition(
+            fillColor: const Color(0xFF0E0E10),
+            animation: primaryAnimation,
+            secondaryAnimation: secondaryAnimation,
+            transitionType: SharedAxisTransitionType.vertical,
+            child: child,
+          );
+        },
+        child: _containers.elementAt(_selectedPage),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color(0xFF0E0E10),
         showUnselectedLabels: false,
