@@ -7,7 +7,9 @@ class AuthServiceProvider extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-  Future verifyEmail(String email) async {}
+  Future verifyEmail(String email) async {
+    // TODO
+  }
 
   Future<UserCredential> addUser(String email, String password) async {
     return await _auth.createUserWithEmailAndPassword(

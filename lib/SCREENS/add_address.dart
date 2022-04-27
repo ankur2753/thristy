@@ -5,9 +5,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:thristy/SERVICES/database.dart';
 import 'package:thristy/utils/input_component.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class AddAddress extends StatefulWidget {
-  const AddAddress({Key? key}) : super(key: key);
+  final LatLng givenPos;
+  const AddAddress({Key? key, required this.givenPos}) : super(key: key);
 
   @override
   State<AddAddress> createState() => _AddAddressState();
@@ -19,6 +21,11 @@ class _AddAddressState extends State<AddAddress> {
   TextEditingController landmark = TextEditingController();
   TextEditingController floor = TextEditingController();
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   void dispose() {
     super.dispose();
     complete.dispose();
@@ -29,6 +36,7 @@ class _AddAddressState extends State<AddAddress> {
 
   @override
   Widget build(BuildContext context) {
+    final LatLng givenPosition = widget.givenPos;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Add new Address"),
@@ -62,12 +70,14 @@ class _AddAddressState extends State<AddAddress> {
               completeAddress: complete.text,
               floor: floor.text,
               landmark: landmark.text,
+              position: givenPosition,
             );
             complete.clear();
             name.clear();
             floor.clear();
             complete.clear();
             landmark.clear();
+            Navigator.popUntil(context, ModalRoute.withName("AddressBook"));
           } on FirebaseException catch (e) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(e.message.toString())));

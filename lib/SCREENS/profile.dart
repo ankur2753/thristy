@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:thristy/SCREENS/your_orders.dart';
 import 'package:thristy/SERVICES/auth.dart';
-import 'package:animations/animations.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -76,8 +75,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           title: const Text("Address Book"),
           trailing: const Icon(Icons.navigate_next),
           onTap: () {
-            Navigator.push(context,
-                CupertinoPageRoute(builder: (builder) => const AddressBook()));
+            Navigator.push(
+                context,
+                CupertinoPageRoute(
+                    settings: const RouteSettings(name: "AddressBook"),
+                    builder: (builder) => const AddressBook()));
           },
         ),
         const ListTile(

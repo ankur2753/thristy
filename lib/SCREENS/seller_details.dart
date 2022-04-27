@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:thristy/SERVICES/database.dart';
 import 'dart:io';
 import 'package:thristy/utils/button_component.dart';
 import 'package:thristy/utils/input_component.dart';
@@ -14,6 +17,7 @@ class SellerDetails extends StatefulWidget {
 class _SellerDetailsState extends State<SellerDetails> {
   TextEditingController name = TextEditingController();
   TextEditingController location = TextEditingController();
+  TextEditingController workingHours = TextEditingController();
   File? image;
   @override
   void dispose() {
@@ -40,13 +44,31 @@ class _SellerDetailsState extends State<SellerDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text("Seller Details"),
+      ),
       body: Form(
         child: ListView(
           children: [
             InputSection(
               controller: name,
               descriptor: "Enter the Name of Shop",
+              validator: (String? givenName) {
+                String? errorMsg;
+                Provider.of<DatabaseServiesProvider>(context, listen: false)
+                    .getSellers()
+                    .every(
+                  (element) {
+                    String ele = element.toString();
+                    if (ele == givenName) {
+                      errorMsg = "Shop name already taken";
+                      return true;
+                    }
+                    return false;
+                  },
+                );
+                return errorMsg;
+              },
             ),
             InputSection(
               controller: location,
@@ -65,15 +87,37 @@ class _SellerDetailsState extends State<SellerDetails> {
                     children: [
                       SimpleDialogOption(
                         child: const Text("Upload from gallery"),
-                        onPressed: () {
+                        onPressed: () async {
                           Navigator.of(context).pop();
+                          if (await Permission.photos.isDenied) {
+                            Permission.photos.request();
+                          }
+                          if (await Permission.photos.isPermanentlyDenied) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                    "Files Permissions  denied, cannot request"),
+                              ),
+                            );
+                          }
                           getImage(true);
                         },
                       ),
                       SimpleDialogOption(
                         child: const Text("Take a picture"),
-                        onPressed: () {
+                        onPressed: () async {
                           Navigator.of(context).pop();
+                          if (await Permission.camera.isDenied) {
+                            Permission.camera.request();
+                          }
+                          if (await Permission.camera.isPermanentlyDenied) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                    "Camera Permissions denied, cannot request"),
+                              ),
+                            );
+                          }
                           getImage(false);
                         },
                       ),
@@ -86,6 +130,10 @@ class _SellerDetailsState extends State<SellerDetails> {
             )
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.navigate_next),
       ),
     );
   }

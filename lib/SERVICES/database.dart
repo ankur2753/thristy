@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class DatabaseServiesProvider extends ChangeNotifier {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -44,6 +45,7 @@ class DatabaseServiesProvider extends ChangeNotifier {
     required String completeAddress,
     String? landmark,
     String? floor,
+    required LatLng position,
   }) async {
     try {
       await _db.collection('addressBook').doc(_user.uid).set(
@@ -52,6 +54,7 @@ class DatabaseServiesProvider extends ChangeNotifier {
             'Complete Address': completeAddress,
             'landmark': landmark,
             'floor': floor,
+            'pos': GeoPoint(position.latitude, position.longitude),
           },
         },
         SetOptions(merge: true),

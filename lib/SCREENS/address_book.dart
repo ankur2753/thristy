@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:thristy/SCREENS/add_address.dart';
+import 'package:thristy/SCREENS/locate_on_map.dart';
 import 'package:thristy/SERVICES/database.dart';
 import 'package:thristy/utils/constants.dart';
 
@@ -45,7 +45,7 @@ class _AddressBookState extends State<AddressBook> {
                   isThreeLine: true,
                   title: Text("${currentAddress.key}"),
                   subtitle: Text(
-                      "${currentAddress.value['floor']} , ${currentAddress.value['Complete Address']}"),
+                      "${currentAddress.value['floor']}${currentAddress.value['floor'].toString().isNotEmpty ? ' , ' : ''}${currentAddress.value['Complete Address']}"),
                   trailing: IconButton(
                     icon: const FaIcon(
                       FontAwesomeIcons.trash,
@@ -64,7 +64,7 @@ class _AddressBookState extends State<AddressBook> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context,
-              CupertinoPageRoute(builder: (builder) => const AddAddress()));
+              CupertinoPageRoute(builder: (builder) => const LocateOnMap()));
         },
         child: const FaIcon(FontAwesomeIcons.plus),
       ),
