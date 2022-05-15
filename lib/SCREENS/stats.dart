@@ -33,7 +33,7 @@ class StatsScreen extends StatelessWidget {
         },
         openBuilder: (context, func) {
           return Scaffold(
-            appBar: AppBar(title: const Text("bruh")),
+            appBar: AppBar(title: const Text("Graphs and Stats Here")),
           );
         },
       ),

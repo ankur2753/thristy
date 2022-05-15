@@ -2,7 +2,6 @@
     package="com.shootingDragon.thirsty">
    <application
         android:label="thristy"
-        android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

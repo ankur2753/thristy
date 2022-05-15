@@ -1,26 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:thristy/SCREENS/address_book.dart';
-import 'package:thristy/SCREENS/become_seller.dart';
 import 'package:thristy/SCREENS/login.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:thristy/SCREENS/seller_details.dart';
+import 'package:thristy/SCREENS/success_seller.dart';
 import 'package:thristy/SCREENS/your_orders.dart';
 import 'package:thristy/SERVICES/auth.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
-
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     final User kek = FirebaseAuth.instance.currentUser!;
@@ -37,6 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   kek.displayName?.toUpperCase() ?? "Name of the person",
                 ),
                 CircleAvatar(
+                  child: const FaIcon(FontAwesomeIcons.pencil),
                   foregroundImage: NetworkImage(
                     kek.photoURL ?? "https://robohash.org/${kek.uid}",
                     // TODO: mention resource usage
@@ -66,9 +58,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           trailing: const Icon(Icons.navigate_next),
           onTap: () {
             Navigator.push(
-                context,
-                CupertinoPageRoute(
-                    builder: (builder) => const YourOrdersScreen()));
+              context,
+              CupertinoPageRoute(
+                builder: (builder) => const YourOrdersScreen(),
+              ),
+            );
           },
         ),
         ListTile(
@@ -95,7 +89,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           trailing: const Icon(Icons.navigate_next),
           onTap: () {
             Navigator.push(context,
-                CupertinoPageRoute(builder: (contex) => const BecomeSeller()));
+                CupertinoPageRoute(builder: (contex) => const SellerDetails()));
           },
         ),
         const ListTile(
@@ -106,9 +100,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
           title: Text("Send Feedback"),
           trailing: Icon(Icons.navigate_next),
         ),
-        const ListTile(
-          title: Text("Rate us on Store"),
-          trailing: Icon(Icons.navigate_next),
+        ListTile(
+          title: const Text("Rate us on Store"),
+          trailing: const Icon(Icons.navigate_next),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  fullscreenDialog: true,
+                  builder: (context) => const SuccesSeller()),
+            );
+          },
         ),
         ListTile(
           title: const Text("Log Out"),

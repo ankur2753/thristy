@@ -1,14 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:thristy/SERVICES/database.dart';
 import 'package:thristy/utils/input_component.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class AddAddress extends StatefulWidget {
-  final LatLng givenPos;
+  final GeoPoint givenPos;
   const AddAddress({Key? key, required this.givenPos}) : super(key: key);
 
   @override
@@ -36,7 +34,7 @@ class _AddAddressState extends State<AddAddress> {
 
   @override
   Widget build(BuildContext context) {
-    final LatLng givenPosition = widget.givenPos;
+    final GeoPoint givenPosition = widget.givenPos;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Add new Address"),

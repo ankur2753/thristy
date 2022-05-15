@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:thristy/SCREENS/order.dart';
 import 'package:thristy/SCREENS/profile.dart';
 import 'package:thristy/SCREENS/stats.dart';
@@ -22,19 +23,20 @@ class _HomeState extends State<Home> {
   ];
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(statusBarColor: Colors.black),
+    );
     return Scaffold(
       body: PageTransitionSwitcher(
-        reverse: true,
         transitionBuilder: (
           Widget child,
           Animation<double> primaryAnimation,
           Animation<double> secondaryAnimation,
         ) {
-          return SharedAxisTransition(
+          return FadeThroughTransition(
             fillColor: const Color(0xFF0E0E10),
             animation: primaryAnimation,
             secondaryAnimation: secondaryAnimation,
-            transitionType: SharedAxisTransitionType.vertical,
             child: child,
           );
         },

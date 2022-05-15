@@ -19,9 +19,6 @@ class _AddressBookState extends State<AddressBook> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Address Book")),
-      // body: const Center(child: CircularProgressIndicator()),
-      // body:
-      // body:
       body: StreamBuilder(
           stream: Provider.of<DatabaseServiesProvider>(context).getAddress(),
           builder:
@@ -63,8 +60,12 @@ class _AddressBookState extends State<AddressBook> {
           }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context,
-              CupertinoPageRoute(builder: (builder) => const LocateOnMap()));
+          Navigator.push(
+            context,
+            CupertinoPageRoute(
+              builder: (builder) => const LocateOnMap(),
+            ),
+          );
         },
         child: const FaIcon(FontAwesomeIcons.plus),
       ),

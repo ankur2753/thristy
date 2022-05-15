@@ -6,13 +6,10 @@ class StorageServicesProvider extends ChangeNotifier {
   final Reference storageRef = FirebaseStorage.instance.ref();
 
   Future<String> uploadImage(File bannerImg, String shopName) async {
-    String path = "";
-    storageRef
+    TaskSnapshot img = await storageRef
         .child('sellerBanners')
-        .putFile(bannerImg.renameSync(shopName))
-        .then((p0) async {
-      path = await p0.ref.getDownloadURL();
-    });
-    return path;
+        .child(shopName)
+        .putFile(bannerImg);
+    return img.ref.getDownloadURL();
   }
 }
