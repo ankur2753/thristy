@@ -3,8 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:thristy/SCREENS/detailed_page.dart';
-import 'package:thristy/SERVICES/database.dart';
+import 'package:thristy/screens/detailed_page.dart';
+import 'package:thristy/services/database.dart';
 import 'package:thristy/utils/constants.dart';
 
 class OrderScreen extends StatelessWidget {

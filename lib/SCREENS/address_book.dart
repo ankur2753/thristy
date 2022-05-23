@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:thristy/SCREENS/locate_on_map.dart';
-import 'package:thristy/SERVICES/database.dart';
+import 'package:thristy/screens/locate_on_map.dart';
+import 'package:thristy/services/database.dart';
 import 'package:thristy/utils/constants.dart';
 
 class AddressBook extends StatefulWidget {

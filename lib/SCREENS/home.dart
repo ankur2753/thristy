@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:thristy/SCREENS/order.dart';
-import 'package:thristy/SCREENS/profile.dart';
-import 'package:thristy/SCREENS/stats.dart';
+import 'package:thristy/screens/order.dart';
+import 'package:thristy/screens/profile.dart';
+import 'package:thristy/screens/stats.dart';
 import 'package:thristy/utils/constants.dart';
 import 'package:animations/animations.dart';
 

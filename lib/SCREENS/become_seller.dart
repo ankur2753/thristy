@@ -2,12 +2,11 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:thristy/SCREENS/success_seller.dart';
 import 'package:thristy/SERVICES/database.dart';
 import 'package:thristy/SERVICES/storage.dart';
+import 'package:thristy/screens/success_msg.dart';
 import 'package:thristy/utils/button_component.dart';
 
 class BecomeSeller extends StatelessWidget {
@@ -109,7 +108,9 @@ class BecomeSeller extends StatelessWidget {
               Navigator.pushReplacement(
                 context,
                 CupertinoPageRoute(
-                  builder: (BuildContext context) => const SuccesSeller(),
+                  fullscreenDialog: true,
+                  builder: (BuildContext context) =>
+                      const SuccesScreen(msg: "You're A Seller Now"),
                 ),
               );
             },

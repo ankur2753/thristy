@@ -8,9 +8,10 @@ class DatabaseServiesProvider extends ChangeNotifier {
 
   // USERMETADATA SECTION
   Future<bool> checkUserType() async {
-    var sanp = await _db.collection('usersMetadata').doc(_user.uid).get();
-    sanp.data()['isCustomer'] ?? false;
-    return Future.value(false);
+    DocumentSnapshot doc =
+        await _db.collection('usersMetadata').doc(_user.uid).get();
+    Map<String, bool> res = doc.data() as Map<String, bool>;
+    return Future.value(res['isCustomer'] ?? true);
   }
 
   Future setUserType({required bool isCustomer}) async {
@@ -24,7 +25,7 @@ class DatabaseServiesProvider extends ChangeNotifier {
     DocumentSnapshot snapshot =
         await _db.collection('userMetadata').doc(_user.uid).get();
     Map obj = snapshot.data() as Map;
-
+    print(obj['usage']);
     _db.collection('usersMetadata').doc(_user.uid).set(
       {'usage': int.parse(obj['usage']) + bottles * 20},
       SetOptions(merge: true),

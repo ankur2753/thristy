@@ -48,11 +48,13 @@ class _SellerDetailsState extends State<SellerDetails> {
       selected = await imagePicker.pickImage(
         source: ImageSource.gallery,
         maxHeight: 400,
+        imageQuality: 60,
       );
     } else {
       selected = await imagePicker.pickImage(
         source: ImageSource.camera,
         maxHeight: 400,
+        imageQuality: 60,
       );
     }
     setState(() {

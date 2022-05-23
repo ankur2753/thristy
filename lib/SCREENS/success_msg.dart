@@ -3,8 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:thristy/utils/button_component.dart';
 
-class SuccesSeller extends StatelessWidget {
-  const SuccesSeller({
+class SuccesScreen extends StatelessWidget {
+  final String msg;
+  const SuccesScreen({
+    required this.msg,
     Key? key,
   }) : super(key: key);
 
@@ -30,7 +32,7 @@ class SuccesSeller extends StatelessWidget {
                 "Congratulation",
                 style: Theme.of(context).textTheme.titleLarge,
               ),
-              const Text("You're a Seller Now !")
+              Text(msg)
             ],
           ),
         ),

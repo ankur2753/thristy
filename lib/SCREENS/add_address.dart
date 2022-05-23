@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:thristy/SERVICES/database.dart';
+import 'package:thristy/services/database.dart';
 import 'package:thristy/utils/input_component.dart';
 
 class AddAddress extends StatefulWidget {

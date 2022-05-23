@@ -1,14 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:thristy/SCREENS/address_book.dart';
-import 'package:thristy/SCREENS/login.dart';
+import 'package:thristy/screens/address_book.dart';
+import 'package:thristy/screens/login.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:thristy/SCREENS/seller_details.dart';
-import 'package:thristy/SCREENS/success_seller.dart';
-import 'package:thristy/SCREENS/your_orders.dart';
-import 'package:thristy/SERVICES/auth.dart';
+import 'package:thristy/screens/seller_details.dart';
+import 'package:thristy/screens/your_orders.dart';
+import 'package:thristy/services/auth.dart';
+import 'package:thristy/screens/success_msg.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -106,9 +106,9 @@ class ProfileScreen extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  fullscreenDialog: true,
-                  builder: (context) => const SuccesSeller()),
+              CupertinoPageRoute(
+                  builder: (context) => const SuccesScreen(
+                      msg: "You've Given Rating ! \n thank you")),
             );
           },
         ),

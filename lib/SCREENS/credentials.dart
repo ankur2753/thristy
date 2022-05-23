@@ -2,10 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:thristy/SERVICES/auth.dart';
+import 'package:thristy/services/auth.dart';
 import 'package:thristy/utils/button_component.dart';
 import 'package:thristy/utils/constants.dart';
-import 'package:thristy/SCREENS/home.dart';
+import 'package:thristy/screens/home.dart';
 
 class CredentialsScreen extends StatefulWidget {
   const CredentialsScreen({Key? key}) : super(key: key);

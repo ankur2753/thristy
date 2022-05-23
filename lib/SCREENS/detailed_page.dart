@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:thristy/SCREENS/success_seller.dart';
-import 'package:thristy/SERVICES/database.dart';
+import 'package:thristy/services/database.dart';
+import 'package:thristy/screens/success_msg.dart';
 import 'package:thristy/utils/button_component.dart';
 import 'package:thristy/utils/constants.dart';
 
@@ -48,12 +49,55 @@ class _DetailedPageState extends State<DetailedPage> {
                 Expanded(
                   child: ListView(
                     children: [
-                      BigButton(
-                        onPressed: () {},
-                        buttonChild: Text(selectedAddress),
-                        isCTA: false,
-                      ),
-                      getQuantity(snapshot),
+                      StreamBuilder(
+                          stream: Provider.of<DatabaseServiesProvider>(context)
+                              .getAddress(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<DocumentSnapshot> snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            }
+                            if (!snapshot.hasData ||
+                                snapshot.data?.data() == null) {
+                              return const Text(
+                                  "PLEASE ADD AN ADDRESS BEFORE ODERING");
+                            }
+                            Map<String, dynamic> address =
+                                snapshot.data!.data() as Map<String, dynamic>;
+                            if (address.isEmpty) {
+                              return const Text(
+                                  "PLEASE ADD AN ADDRESS BEFORE ODERING");
+                            }
+                            address.putIfAbsent("No Address Selected",
+                                () => "Please select an Address");
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text("ORDER AT:"),
+                                DropdownButton(
+                                  hint:
+                                      const Text("Select an address to order"),
+                                  dropdownColor: kNavyBlue,
+                                  value: selectedAddress,
+                                  items: address.entries
+                                      .map((MapEntry<String, dynamic> e) {
+                                    return DropdownMenuItem(
+                                      enabled: e.key != "No Address Selected",
+                                      child: Text(e.key),
+                                      value: e.key,
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      selectedAddress = newValue!;
+                                    });
+                                  },
+                                ),
+                              ],
+                            );
+                          }),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -84,6 +128,7 @@ class _DetailedPageState extends State<DetailedPage> {
                           )
                         ],
                       ),
+                      getQuantity(snapshot),
                       BigButton(
                         onPressed: () {
                           Navigator.push(
@@ -105,6 +150,7 @@ class _DetailedPageState extends State<DetailedPage> {
                   ),
                 ),
                 BigButton(
+                  // TODO: add check if user selected an address
                   onPressed: () async {
                     try {
                       String userUid = FirebaseAuth.instance.currentUser!.uid;
@@ -128,8 +174,9 @@ class _DetailedPageState extends State<DetailedPage> {
                     } finally {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) => const SuccesSeller(),
+                        CupertinoPageRoute(
+                          builder: (context) => const SuccesScreen(
+                              msg: "You've Successfully placed an order"),
                         ),
                       );
                     }
@@ -150,7 +197,7 @@ class _DetailedPageState extends State<DetailedPage> {
   Expanded expandedDarkCard({required List<Widget> children}) {
     return Expanded(
       child: Card(
-        color: kPurple,
+        color: Color(0xFF6C7888),
         child: SizedBox(
           height: 140,
           child: Column(

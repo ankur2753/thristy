@@ -3,10 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:thristy/SCREENS/home.dart';
-import 'package:thristy/SCREENS/signup.dart';
-import 'package:thristy/SERVICES/auth.dart';
-import 'package:thristy/SERVICES/database.dart';
+import 'package:thristy/screens/home.dart';
+import 'package:thristy/screens/signup.dart';
+import 'package:thristy/services/auth.dart';
+import 'package:thristy/services/database.dart';
 import 'package:thristy/utils/constants.dart';
 import 'package:thristy/SCREENS/credentials.dart';
 import 'package:thristy/utils/button_component.dart';
@@ -26,7 +26,7 @@ class _LoginState extends State<LoginPage> {
         if (snapshot.hasData) {
           return const Home();
         }
-        if (snapshot.connectionState == ConnectionState.waiting) {
+        if (snapshot.connectionState != ConnectionState.done) {
           return const Center(
             child: CircularProgressIndicator(),
           );
@@ -65,6 +65,9 @@ class _LoginState extends State<LoginPage> {
                         Provider.of<DatabaseServiesProvider>(context,
                                 listen: false)
                             .setUserType(isCustomer: true);
+                        Provider.of<DatabaseServiesProvider>(context,
+                                listen: false)
+                            .addUsage(bottles: 0);
                       }
                     },
                     buttonLable: const Text("Login With Google"),
