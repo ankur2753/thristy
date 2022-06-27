@@ -9,6 +9,7 @@ import 'package:thristy/screens/seller_details.dart';
 import 'package:thristy/screens/your_orders.dart';
 import 'package:thristy/services/auth.dart';
 import 'package:thristy/screens/success_msg.dart';
+import 'package:thristy/utils/themes.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -17,26 +18,23 @@ class ProfileScreen extends StatelessWidget {
     final User kek = FirebaseAuth.instance.currentUser!;
     return ListView(
       children: [
-        Card(
-          color: const Color(0xFF0E0E10),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 18.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  kek.displayName?.toUpperCase() ?? "Name of the person",
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 18.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text(
+                kek.displayName?.toUpperCase() ?? "Name of the person",
+              ),
+              CircleAvatar(
+                child: const FaIcon(FontAwesomeIcons.pencil),
+                foregroundImage: NetworkImage(
+                  kek.photoURL ?? "https://robohash.org/${kek.uid}",
+                  // TODO: mention resource usage
                 ),
-                CircleAvatar(
-                  child: const FaIcon(FontAwesomeIcons.pencil),
-                  foregroundImage: NetworkImage(
-                    kek.photoURL ?? "https://robohash.org/${kek.uid}",
-                    // TODO: mention resource usage
-                  ),
-                  minRadius: 50,
-                ),
-              ],
-            ),
+                minRadius: 50,
+              ),
+            ],
           ),
         ),
         ListTile(
@@ -76,9 +74,13 @@ class ProfileScreen extends StatelessWidget {
                     builder: (builder) => const AddressBook()));
           },
         ),
-        const ListTile(
-          title: Text("Favourites"),
-          trailing: Icon(Icons.navigate_next),
+        SwitchListTile(
+          title: const Text("Switch Theme"),
+          value: Provider.of<AppThemeProvider>(context).isDarkTheme,
+          onChanged: (value) {
+            Provider.of<AppThemeProvider>(context, listen: false).setDark =
+                value;
+          },
         ),
         const ListTile(
           title: Text("Manage Notifications"),

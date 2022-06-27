@@ -44,7 +44,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               isPasword: true,
             ),
             CheckboxListTile(
-                activeColor: kNavyBlue,
+                activeColor: kPrussianBlue,
                 title: const Text("I agree With big Terms and policies "),
                 value: _isAgreed,
                 onChanged: (bool? newVal) {

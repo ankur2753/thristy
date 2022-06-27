@@ -97,6 +97,14 @@ class BecomeSeller extends StatelessWidget {
                   context,
                   listen: false,
                 ).setUserType(isCustomer: false);
+                Navigator.pushReplacement(
+                  context,
+                  CupertinoPageRoute(
+                    fullscreenDialog: true,
+                    builder: (BuildContext context) =>
+                        const SuccesScreen(msg: "You're A Seller Now"),
+                  ),
+                );
               } on Exception catch (e) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
@@ -105,14 +113,6 @@ class BecomeSeller extends StatelessWidget {
                 );
               }
               // TODO:add error screen
-              Navigator.pushReplacement(
-                context,
-                CupertinoPageRoute(
-                  fullscreenDialog: true,
-                  builder: (BuildContext context) =>
-                      const SuccesScreen(msg: "You're A Seller Now"),
-                ),
-              );
             },
             buttonIcon: const FaIcon(
               FontAwesomeIcons.check,

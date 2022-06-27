@@ -20,8 +20,10 @@ class BigButton extends StatelessWidget {
         onPressed: () => onPressed(),
         child: buttonChild,
         style: ElevatedButton.styleFrom(
-          primary: isCTA ? kLightBlue : kWhiteBlue,
-          onPrimary: isCTA ? kWhiteBlue : kLightBlue,
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(5))),
+          primary: isCTA ? Theme.of(context).primaryColor : kWhiteBlue,
+          onPrimary: isCTA ? Theme.of(context).backgroundColor : kBlueBlack,
           minimumSize: const Size(double.infinity, 50),
         ),
       ),
@@ -51,9 +53,11 @@ class BigButtonWithIcon extends StatelessWidget {
         icon: buttonIcon,
         label: buttonLable,
         style: ElevatedButton.styleFrom(
-          primary: isCTA ? kLightBlue : kWhiteBlue,
-          onPrimary: isCTA ? kWhiteBlue : kLightBlue,
+          primary: isCTA ? Theme.of(context).primaryColor : kWhiteBlue,
+          onPrimary: isCTA ? Theme.of(context).backgroundColor : kBlueBlack,
           minimumSize: const Size(double.infinity, 50),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10))),
         ),
       ),
     );

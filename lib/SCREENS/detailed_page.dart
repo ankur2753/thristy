@@ -79,7 +79,7 @@ class _DetailedPageState extends State<DetailedPage> {
                                 DropdownButton(
                                   hint:
                                       const Text("Select an address to order"),
-                                  dropdownColor: kNavyBlue,
+                                  dropdownColor: kPrussianBlue,
                                   value: selectedAddress,
                                   items: address.entries
                                       .map((MapEntry<String, dynamic> e) {
@@ -212,7 +212,7 @@ class _DetailedPageState extends State<DetailedPage> {
 
   Card getQuantity(AsyncSnapshot<dynamic> snapshot) {
     return Card(
-      color: kNavyBlue,
+      color: kPrussianBlue,
       child: SizedBox(
         height: 140,
         child: Row(

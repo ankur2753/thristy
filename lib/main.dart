@@ -16,7 +16,14 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(providers: [
+      ChangeNotifierProvider(create: (context) => AuthServiceProvider()),
+      ChangeNotifierProvider(create: (context) => AppThemeProvider()),
+      ChangeNotifierProvider(create: (context) => DatabaseServiesProvider()),
+      ChangeNotifierProvider(create: (context) => StorageServicesProvider()),
+    ], child: const MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -25,18 +32,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => AuthServiceProvider()),
-        ChangeNotifierProvider(create: (context) => DatabaseServiesProvider()),
-        ChangeNotifierProvider(create: (context) => StorageServicesProvider()),
-      ],
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        debugShowCheckedModeBanner: false,
-        home: const SafeArea(child: LoginPage()),
-        theme: myTheme,
-      ),
+    return MaterialApp(
+      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      home: const SafeArea(child: LoginPage()),
+      theme: Provider.of<AppThemeProvider>(context, listen: true).currentTheme,
     );
   }
 }

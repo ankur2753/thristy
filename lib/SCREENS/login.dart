@@ -7,6 +7,7 @@ import 'package:thristy/screens/home.dart';
 import 'package:thristy/screens/signup.dart';
 import 'package:thristy/services/auth.dart';
 import 'package:thristy/services/database.dart';
+import 'package:thristy/services/storage.dart';
 import 'package:thristy/utils/constants.dart';
 import 'package:thristy/SCREENS/credentials.dart';
 import 'package:thristy/utils/button_component.dart';
@@ -26,7 +27,7 @@ class _LoginState extends State<LoginPage> {
         if (snapshot.hasData) {
           return const Home();
         }
-        if (snapshot.connectionState != ConnectionState.done) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
             child: CircularProgressIndicator(),
           );
@@ -71,18 +72,18 @@ class _LoginState extends State<LoginPage> {
                       }
                     },
                     buttonLable: const Text("Login With Google"),
-                    buttonIcon:
-                        const FaIcon(FontAwesomeIcons.google, color: kNavyBlue),
+                    buttonIcon: const FaIcon(FontAwesomeIcons.google,
+                        color: kPrussianBlue),
                     isCTA: false,
                   ),
                   const Text("or"),
                   const Divider(
                     height: 20,
                     thickness: 1,
-                    color: kWhiteBlue,
                   ),
-                  const Text("if you're new here Consider",
-                      style: TextStyle(color: kWhiteBlue)),
+                  const Text(
+                    "if you're new here Consider",
+                  ),
                   BigButton(
                     onPressed: () {
                       Navigator.push(

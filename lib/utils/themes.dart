@@ -1,38 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import './constants.dart';
 
-ThemeData myTheme = ThemeData.dark().copyWith(
-  scaffoldBackgroundColor: const Color(0xFF0E0E10),
-  backgroundColor: const Color(0xFF0E0E10),
-  textTheme: GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme),
-  cardColor: Colors.grey.shade800,
-  timePickerTheme: const TimePickerThemeData(
-    backgroundColor: Color(0xFF0E0E10),
-    dialBackgroundColor: kNavyBlue,
-  ),
-  appBarTheme: const AppBarTheme(
-      centerTitle: true,
-      backgroundColor: Colors.black,
-      systemOverlayStyle: SystemUiOverlayStyle(
-        statusBarColor: Colors.black,
-      )),
-  colorScheme: const ColorScheme(
-    brightness: Brightness.dark,
-    primary: kLightBlue,
-    secondary: kLightBlue,
-    error: red,
-    background: Color(0xFF0E0E10),
-    surface: kPurple,
-    onPrimary: kWhiteBlue,
-    onSecondary: kWhiteBlue,
-    onError: Color.fromARGB(255, 240, 131, 124),
-    onBackground: kWhiteBlue,
-    onSurface: kWhiteBlue,
-    tertiary: kTert,
-  ),
-  inputDecorationTheme: InputDecorationTheme(
-    border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-  ),
-);
+class AppThemeProvider extends ChangeNotifier {
+  ThemeData myDarkTheme = ThemeData(
+    appBarTheme: const AppBarTheme(centerTitle: true),
+    textTheme: GoogleFonts.muliTextTheme(
+      ThemeData(brightness: Brightness.dark).textTheme,
+    ),
+    colorScheme: const ColorScheme(
+      brightness: Brightness.dark,
+      primary: kBlue,
+      onPrimary: kWhiteBlue,
+      secondary: kLightBlue,
+      onSecondary: kWhiteBlue,
+      error: red,
+      onError: Color.fromARGB(255, 235, 102, 93),
+      background: kDarkGrey,
+      onBackground: kWhiteBlue,
+      surface: kBlue,
+      onSurface: Colors.white,
+      tertiary: kPrussianBlue,
+    ),
+  );
+
+  ThemeData myThemeLight = ThemeData.from(
+    textTheme: GoogleFonts.robotoTextTheme(),
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: kBlue,
+    ),
+  );
+
+  static bool _isDarkMode = false;
+
+  set setDark(bool value) {
+    _isDarkMode = value;
+    notifyListeners();
+  }
+
+  bool get isDarkTheme => _isDarkMode;
+  ThemeData get currentTheme => _isDarkMode ? myDarkTheme : myThemeLight;
+}

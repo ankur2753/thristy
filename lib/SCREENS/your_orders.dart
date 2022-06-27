@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:thristy/SERVICES/database.dart';
+import 'package:thristy/services/database.dart';
 import 'package:thristy/utils/button_component.dart';
 import 'package:thristy/utils/constants.dart';
 
@@ -19,7 +19,6 @@ class YourOrdersScreen extends StatelessWidget {
     Text("You Don't Have an Order Yet,"),
     Text("Try Ordering First"),
   ];
-  // TODO: implement firebase logic here
 
   @override
   Widget build(BuildContext context) {

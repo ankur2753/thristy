@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,11 +9,11 @@ class DatabaseServiesProvider extends ChangeNotifier {
   final User _user = FirebaseAuth.instance.currentUser!;
 
   // USERMETADATA SECTION
-  Future<bool> checkUserType() async {
+  Future<bool> isUserCustomer() async {
     DocumentSnapshot doc =
         await _db.collection('usersMetadata').doc(_user.uid).get();
     Map<String, bool> res = doc.data() as Map<String, bool>;
-    return Future.value(res['isCustomer'] ?? true);
+    return res['isCustomer'] ?? true;
   }
 
   Future setUserType({required bool isCustomer}) async {
@@ -25,7 +27,6 @@ class DatabaseServiesProvider extends ChangeNotifier {
     DocumentSnapshot snapshot =
         await _db.collection('userMetadata').doc(_user.uid).get();
     Map obj = snapshot.data() as Map;
-    print(obj['usage']);
     _db.collection('usersMetadata').doc(_user.uid).set(
       {'usage': int.parse(obj['usage']) + bottles * 20},
       SetOptions(merge: true),

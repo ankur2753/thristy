@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:thristy/services/auth.dart';
 import 'package:thristy/utils/button_component.dart';
-import 'package:thristy/utils/constants.dart';
 import 'package:thristy/screens/home.dart';
 
 class CredentialsScreen extends StatefulWidget {
@@ -67,8 +66,9 @@ class _CredentialsScreenState extends State<CredentialsScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("can't sign in ?",
-                        style: TextStyle(color: kWhiteBlue)),
+                    const Text(
+                      "can't sign in ?",
+                    ),
                     TextButton(
                         onPressed: () {}, child: const Text("Forgot Password"))
                   ],
