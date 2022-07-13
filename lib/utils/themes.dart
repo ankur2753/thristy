@@ -24,14 +24,25 @@ class AppThemeProvider extends ChangeNotifier {
     ),
   );
 
-  ThemeData myThemeLight = ThemeData.from(
-    textTheme: GoogleFonts.robotoTextTheme(),
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: kBlue,
+  ThemeData myThemeLight = ThemeData(
+    cardColor: const Color(0xFFFFFFFF),
+    colorScheme: const ColorScheme(
+      brightness: Brightness.light,
+      primary: kBlue,
+      onPrimary: kWhiteBlue,
+      secondary: kLightBlue,
+      onSecondary: kWhiteBlue,
+      error: red,
+      onError: Color.fromARGB(255, 235, 102, 93),
+      background: Color(0xFFFFFFFF),
+      onBackground: kWhiteBlue,
+      surface: kBlue,
+      onSurface: Colors.white,
+      tertiary: kPrussianBlue,
     ),
   );
 
-  static bool _isDarkMode = false;
+  static bool _isDarkMode = true;
 
   set setDark(bool value) {
     _isDarkMode = value;

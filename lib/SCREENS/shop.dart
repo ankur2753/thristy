@@ -52,6 +52,7 @@ class ShopsListScreen extends StatelessWidget {
                 },
                 // openBuilder: (BuildContext context, fn) => DetailedPage(
                 //   documentReference: seller.value['docRef'],
+                //   imageSrc: seller.value['photoUrl'],
                 // ),
                 openBuilder: (BuildContext context, fn) => PlaceOrderScreen(
                   documentReference: seller.value['docRef'],

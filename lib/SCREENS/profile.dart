@@ -75,7 +75,7 @@ class ProfileScreen extends StatelessWidget {
           },
         ),
         SwitchListTile(
-          title: const Text("Switch Theme"),
+          title: const Text("Dark Theme"),
           value: Provider.of<AppThemeProvider>(context).isDarkTheme,
           onChanged: (value) {
             Provider.of<AppThemeProvider>(context, listen: false).setDark =

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-const Color kPrussianBlue = Color(0xFF708AF4);
+const Color kPrussianBlue = Color(0xFF0071e3);
 const Color kWhiteBlue = Color(0xffD6F4FF);
 const Color kLightBlue = Color(0xff10C1E5);
 const Color red = Color(0xffDB1F48);

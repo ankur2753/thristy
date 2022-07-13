@@ -7,8 +7,6 @@ import 'package:thristy/screens/home.dart';
 import 'package:thristy/screens/signup.dart';
 import 'package:thristy/services/auth.dart';
 import 'package:thristy/services/database.dart';
-import 'package:thristy/services/storage.dart';
-import 'package:thristy/utils/constants.dart';
 import 'package:thristy/SCREENS/credentials.dart';
 import 'package:thristy/utils/button_component.dart';
 
@@ -72,8 +70,7 @@ class _LoginState extends State<LoginPage> {
                       }
                     },
                     buttonLable: const Text("Login With Google"),
-                    buttonIcon: const FaIcon(FontAwesomeIcons.google,
-                        color: kPrussianBlue),
+                    buttonIcon: const FaIcon(FontAwesomeIcons.google),
                     isCTA: false,
                   ),
                   const Text("or"),
