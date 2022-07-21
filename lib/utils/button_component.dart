@@ -22,8 +22,10 @@ class BigButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(5))),
-          primary: isCTA ? Theme.of(context).primaryColor : kWhiteBlue,
-          onPrimary: isCTA ? Theme.of(context).backgroundColor : kBlueBlack,
+          primary: isCTA
+              ? Theme.of(context).primaryColorDark
+              : Theme.of(context).primaryColorLight,
+          onPrimary: isCTA ? kWhiteBlue : kBlueBlack,
           minimumSize: const Size(double.infinity, 50),
         ),
       ),

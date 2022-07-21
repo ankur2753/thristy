@@ -42,7 +42,7 @@ class AppThemeProvider extends ChangeNotifier {
     ),
   );
 
-  static bool _isDarkMode = true;
+  static bool _isDarkMode = false;
 
   set setDark(bool value) {
     _isDarkMode = value;

@@ -7,8 +7,9 @@ import 'package:flutter/material.dart';
 class DatabaseServiesProvider extends ChangeNotifier {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   final User _user = FirebaseAuth.instance.currentUser!;
+  // TODO: store user data locally for less calls to the server
 
-  // USERMETADATA SECTION
+  // userMetaData SECTION
   Future<bool> isUserCustomer() async {
     DocumentSnapshot doc =
         await _db.collection('usersMetadata').doc(_user.uid).get();
@@ -25,7 +26,7 @@ class DatabaseServiesProvider extends ChangeNotifier {
 
   Future addUsage({required int bottles}) async {
     DocumentSnapshot snapshot =
-        await _db.collection('userMetadata').doc(_user.uid).get();
+        await _db.collection('userMetaData').doc(_user.uid).get();
     Map obj = snapshot.data() as Map;
     _db.collection('usersMetadata').doc(_user.uid).set(
       {'usage': int.parse(obj['usage']) + bottles * 20},
@@ -33,8 +34,14 @@ class DatabaseServiesProvider extends ChangeNotifier {
     );
   }
 
+  Future getUsage() async {
+    DocumentSnapshot snapshot =
+        await _db.collection('userMetaData').doc(_user.uid).get();
+    return snapshot.data() as Map;
+  }
+
   Future editPhone(String phone) async {
-    _db.collection('userMetadata').doc(_user.uid).update({'phone no': phone});
+    _db.collection('userMetaData').doc(_user.uid).update({'phone no': phone});
   }
 
   // ORDERS SECTION

@@ -9,6 +9,7 @@ import 'package:thristy/screens/seller_details.dart';
 import 'package:thristy/screens/your_orders.dart';
 import 'package:thristy/services/auth.dart';
 import 'package:thristy/screens/success_msg.dart';
+import 'package:thristy/services/database.dart';
 import 'package:thristy/utils/themes.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -58,7 +59,7 @@ class ProfileScreen extends StatelessWidget {
             Navigator.push(
               context,
               CupertinoPageRoute(
-                builder: (builder) => const YourOrdersScreen(),
+                builder: (context) => const YourOrdersScreen(),
               ),
             );
           },
@@ -68,10 +69,10 @@ class ProfileScreen extends StatelessWidget {
           trailing: const Icon(Icons.navigate_next),
           onTap: () {
             Navigator.push(
-                context,
-                CupertinoPageRoute(
-                    settings: const RouteSettings(name: "AddressBook"),
-                    builder: (builder) => const AddressBook()));
+              context,
+              CupertinoPageRoute(
+                  builder: (BuildContext contex) => const AddressBook()),
+            );
           },
         ),
         SwitchListTile(
@@ -82,36 +83,14 @@ class ProfileScreen extends StatelessWidget {
                 value;
           },
         ),
-        const ListTile(
-          title: Text("Manage Notifications"),
-          trailing: Icon(Icons.navigate_next),
-        ),
         ListTile(
           title: const Text("Become a Seller"),
           trailing: const Icon(Icons.navigate_next),
           onTap: () {
-            Navigator.push(context,
-                CupertinoPageRoute(builder: (contex) => const SellerDetails()));
-          },
-        ),
-        const ListTile(
-          title: Text("Help"),
-          trailing: Icon(Icons.navigate_next),
-        ),
-        const ListTile(
-          title: Text("Send Feedback"),
-          trailing: Icon(Icons.navigate_next),
-        ),
-        ListTile(
-          title: const Text("Rate us on Store"),
-          trailing: const Icon(Icons.navigate_next),
-          onTap: () {
             Navigator.push(
-              context,
-              CupertinoPageRoute(
-                  builder: (context) => const SuccesScreen(
-                      msg: "You've Given Rating ! \n thank you")),
-            );
+                context,
+                CupertinoPageRoute(
+                    builder: (BuildContext contex) => const SellerDetails()));
           },
         ),
         ListTile(

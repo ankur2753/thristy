@@ -1,11 +1,13 @@
 import 'package:animations/animations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:thristy/screens/detailed_page.dart';
 import 'package:thristy/screens/see_location.dart';
+import 'package:thristy/screens/success_msg.dart';
 import 'package:thristy/services/database.dart';
 import 'package:thristy/utils/button_component.dart';
 import 'package:thristy/utils/constants.dart';
@@ -22,6 +24,7 @@ class PlaceOrderScreen extends StatefulWidget {
 class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
   int currScreen = 0;
   int bottles = 1;
+  String selectedAddress = "none";
   Center noAddressFound() => Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -55,84 +58,92 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
             isCTA: false,
           ),
           Expanded(
-            child: Card(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Container(
-                      decoration: const BoxDecoration(color: kTert),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [Text("Timings")],
+            child: Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Card(
+                elevation: 18,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        decoration: const BoxDecoration(color: kTert),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [Text("Timings")],
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text("Opening Time"),
-                              Text("${snapshot.data['openTime']}"),
-                            ],
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text("Opening Time"),
+                                Text("${snapshot.data['openTime']}"),
+                              ],
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text("Closing Time"),
-                              Text("${snapshot.data['closeTime']}"),
-                            ],
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text("Closing Time"),
+                                Text("${snapshot.data['closeTime']}"),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
           Expanded(
-            child: Card(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Container(
-                      decoration: const BoxDecoration(color: kTert),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [Text("Pricing")],
+            child: Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Card(
+                elevation: 18,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        decoration: const BoxDecoration(color: kTert),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [Text("Pricing")],
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text("Base Price"),
-                              Text("₹${snapshot.data['bottlePrice']}"),
-                            ],
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text("Base Price"),
+                                Text("₹${snapshot.data['bottlePrice']}"),
+                              ],
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text("Delivery Per KM"),
-                              Text("₹${snapshot.data['deliveryRate']}"),
-                            ],
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text("Delivery Per KM"),
+                                Text("₹${snapshot.data['deliveryRate']}"),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
@@ -214,11 +225,26 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
           ),
           BigButton(
             onPressed: () {
+              Provider.of<DatabaseServiesProvider>(context, listen: false)
+                  .addOrder(
+                      documentReference: widget.documentReference,
+                      quantity: bottles,
+                      finalPrice: (snapshot.data!['bottlePrice'] +
+                              snapshot.data!['deliveryRate']) *
+                          bottles,
+                      shopName: snapshot.data!['shopName']);
               setState(() {
-                currScreen = 1;
+                if (selectedAddress != "none") {
+                  Navigator.pushReplacement(
+                    context,
+                    CupertinoPageRoute(
+                        builder: (context) => const SuccesScreen(
+                            msg: "Order Placed Successfully")),
+                  );
+                }
               });
             },
-            buttonChild: const Text("Select A Payment Option"),
+            buttonChild: const Text("Place Order"),
             isCTA: true,
           )
         ],
@@ -249,17 +275,11 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
                   title: Text("${currentAddress.key}"),
                   subtitle: Text(
                       "${currentAddress.value['floor']}${currentAddress.value['floor'].toString().isNotEmpty ? ' , ' : ''}${currentAddress.value['Complete Address']}"),
-                  trailing: IconButton(
-                    icon: const FaIcon(
-                      FontAwesomeIcons.trash,
-                      color: Colors.red,
-                    ),
-                    onPressed: () {
-                      Provider.of<DatabaseServiesProvider>(context,
-                              listen: false)
-                          .deleteAddress(currentAddress.key);
-                    },
-                  ),
+                  onTap: () {
+                    setState(() {
+                      selectedAddress = currentAddress.key;
+                    });
+                  },
                 );
               },
             );
@@ -267,7 +287,6 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
     );
   }
 
-  Column payment(AsyncSnapshot snapshot) => Column();
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -285,7 +304,6 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
           final List<Widget> sections = [
             showDetails(snapshot),
             cart(snapshot),
-            payment(snapshot),
           ];
           return Scaffold(
             appBar: AppBar(
@@ -352,7 +370,6 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
                     ) {
                       return SharedAxisTransition(
                         transitionType: SharedAxisTransitionType.horizontal,
-                        fillColor: const Color(0xFF09090B),
                         animation: primaryAnimation,
                         secondaryAnimation: secondaryAnimation,
                         child: child,

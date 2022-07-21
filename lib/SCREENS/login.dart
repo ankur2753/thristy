@@ -8,6 +8,7 @@ import 'package:thristy/screens/signup.dart';
 import 'package:thristy/services/auth.dart';
 import 'package:thristy/services/database.dart';
 import 'package:thristy/SCREENS/credentials.dart';
+import 'package:thristy/services/storage.dart';
 import 'package:thristy/utils/button_component.dart';
 
 class LoginPage extends StatefulWidget {

@@ -9,12 +9,13 @@ import 'package:thristy/utils/constants.dart';
 
 class AddressBook extends StatefulWidget {
   const AddressBook({Key? key}) : super(key: key);
-
+  String get routeName => 'AddressBook';
   @override
   State<AddressBook> createState() => _AddressBookState();
 }
 
 class _AddressBookState extends State<AddressBook> {
+  String get routeName => 'AddressBook';
   @override
   Widget build(BuildContext context) {
     return Scaffold(

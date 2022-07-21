@@ -22,18 +22,20 @@ class SuccesScreen extends StatelessWidget {
       ),
       body: Column(mainAxisSize: MainAxisSize.max, children: [
         Expanded(
-          child: Column(
-            children: [
-              const FaIcon(
-                FontAwesomeIcons.circleCheck,
-                size: 80,
-              ),
-              Text(
-                "Congratulation",
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              Text(msg)
-            ],
+          child: Center(
+            child: Column(
+              children: [
+                const FaIcon(
+                  FontAwesomeIcons.circleCheck,
+                  size: 80,
+                ),
+                Text(
+                  "Congratulation",
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                Text(msg)
+              ],
+            ),
           ),
         ),
         BigButton(

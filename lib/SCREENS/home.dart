@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:thristy/screens/shop.dart';
 import 'package:thristy/screens/profile.dart';
 import 'package:thristy/screens/stats.dart';
 import 'package:animations/animations.dart';
+import 'package:thristy/services/database.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -19,6 +21,11 @@ class _HomeState extends State<Home> {
     ShopsListScreen(),
     ProfileScreen()
   ];
+  final List _containers2 = const <Widget>[
+    StatsScreen(),
+    ShopsListScreen(),
+    ProfileScreen(),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +41,13 @@ class _HomeState extends State<Home> {
             child: child,
           );
         },
-        child: _containers.elementAt(_selectedPage),
+        child: FutureBuilder<bool>(
+          future:
+              Provider.of<DatabaseServiesProvider>(context).isUserCustomer(),
+          builder: (context, snapshot) => snapshot.hasData && snapshot.data!
+              ? _containers.elementAt(_selectedPage)
+              : _containers2.elementAt(_selectedPage),
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         showUnselectedLabels: false,
