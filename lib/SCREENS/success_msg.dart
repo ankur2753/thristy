@@ -26,11 +26,11 @@ class SuccesScreen extends StatelessWidget {
             child: Column(
               children: [
                 const FaIcon(
-                  FontAwesomeIcons.circleCheck,
+                  FontAwesomeIcons.faceSmile,
                   size: 80,
                 ),
                 Text(
-                  "Congratulation",
+                  "Successful",
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 Text(msg)

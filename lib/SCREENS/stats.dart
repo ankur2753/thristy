@@ -23,7 +23,7 @@ class StatsScreen extends StatelessWidget {
                   builder: (context, snapshot) {
                     print(snapshot.hasData);
                     return Text(
-                      "sad",
+                      "10ltrs",
                       style: Theme.of(context).textTheme.displayMedium,
                     );
                   }),

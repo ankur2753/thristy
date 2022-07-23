@@ -51,7 +51,7 @@ class DatabaseServiesProvider extends ChangeNotifier {
     required int quantity,
     required num finalPrice,
   }) async {
-    return _db.collection(_user.uid).doc('orderBook').set(
+    return _db.collection('orderBook').doc(_user.uid).set(
       {
         DateTime.now().toLocal().toString(): {
           'docRef': documentReference,
@@ -65,7 +65,7 @@ class DatabaseServiesProvider extends ChangeNotifier {
   }
 
   Stream<DocumentSnapshot> getOrders() {
-    return _db.collection(_user.uid).doc('orderBook').snapshots();
+    return _db.collection('orderBook').doc(_user.uid).snapshots();
   }
 
   Future<Object> getOrderDetails({required DocumentReference orderDoc}) async {
@@ -108,7 +108,7 @@ class DatabaseServiesProvider extends ChangeNotifier {
     required GeoPoint position,
   }) async {
     try {
-      await _db.collection(_user.uid).doc('addressBook').set(
+      await _db.collection('addressBook').doc(_user.uid).set(
         {
           title: {
             'Complete Address': completeAddress,
@@ -127,12 +127,12 @@ class DatabaseServiesProvider extends ChangeNotifier {
   }
 
   Stream<DocumentSnapshot> getAddress() {
-    return _db.collection(_user.uid).doc('addressBook').snapshots();
+    return _db.collection('addressBook').doc(_user.uid).snapshots();
   }
 
   Future<bool> deleteAddress(String title) async {
     try {
-      _db.collection(_user.uid).doc('addressBook').update({
+      _db.collection('addressBook').doc(_user.uid).update({
         title: FieldValue.delete(),
       });
       return Future.value(true);
