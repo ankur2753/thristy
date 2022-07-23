@@ -28,6 +28,8 @@ class DatabaseServiesProvider extends ChangeNotifier {
     DocumentSnapshot snapshot =
         await _db.collection('userMetaData').doc(_user.uid).get();
     Map obj = snapshot.data() as Map;
+    String month = DateTime.now().toUtc().toString();
+    print(month);
     _db.collection('usersMetadata').doc(_user.uid).set(
       {'usage': int.parse(obj['usage']) + bottles * 20},
       SetOptions(merge: true),
