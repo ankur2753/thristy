@@ -28,18 +28,25 @@ class DatabaseServiesProvider extends ChangeNotifier {
     DocumentSnapshot snapshot =
         await _db.collection('userMetaData').doc(_user.uid).get();
     Map obj = snapshot.data() as Map;
-    String month = DateTime.now().toUtc().toString();
+    DateTime now = Timestamp.now().toDate();
+    String month = now.month.toString() + now.year.toString();
     print(month);
     _db.collection('usersMetadata').doc(_user.uid).set(
-      {'usage': int.parse(obj['usage']) + bottles * 20},
+      {month: int.parse(obj['usage']) + bottles * 20},
       SetOptions(merge: true),
     );
   }
 
   Future getUsage() async {
+    DateTime now = Timestamp.now().toDate();
+    String month = now.month.toString() + now.year.toString();
+    print(month);
+
     DocumentSnapshot snapshot =
-        await _db.collection('userMetaData').doc(_user.uid).get();
-    return snapshot.data() as Map;
+        await _db.collection('usersMetaData').doc(_user.uid).get();
+    Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+    print(snapshot);
+    return data;
   }
 
   Future editPhone(String phone) async {

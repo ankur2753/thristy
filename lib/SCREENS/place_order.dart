@@ -62,6 +62,9 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
               padding: const EdgeInsets.all(18.0),
               child: Card(
                 elevation: 18,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
                 child: Column(
                   children: [
                     Expanded(
@@ -107,6 +110,9 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
               padding: const EdgeInsets.all(18.0),
               child: Card(
                 elevation: 18,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
                 child: Column(
                   children: [
                     Expanded(

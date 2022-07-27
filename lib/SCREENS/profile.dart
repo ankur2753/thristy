@@ -94,6 +94,17 @@ class ProfileScreen extends StatelessWidget {
           },
         ),
         ListTile(
+          title: const Text("Rate on Play Store"),
+          trailing: const Icon(Icons.navigate_next),
+          onTap: () {
+            Navigator.push(
+                context,
+                CupertinoPageRoute(
+                    builder: (BuildContext contex) =>
+                        const SuccesScreen(msg: "Thamk You")));
+          },
+        ),
+        ListTile(
           title: const Text("Log Out"),
           trailing: const Icon(Icons.logout),
           onTap: () async {

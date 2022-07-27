@@ -21,18 +21,11 @@ class StatsScreen extends StatelessWidget {
                   future:
                       Provider.of<DatabaseServiesProvider>(context).getUsage(),
                   builder: (context, snapshot) {
-                    print(snapshot.hasData);
                     return Text(
                       "10ltrs",
                       style: Theme.of(context).textTheme.displayMedium,
                     );
                   }),
-              const SizedBox(height: 18),
-              const Text("Usage Last Month"),
-              Text(
-                "3000 LTRS",
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
             ],
           ),
         ),

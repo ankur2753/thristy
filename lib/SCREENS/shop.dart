@@ -50,13 +50,13 @@ class ShopsListScreen extends StatelessWidget {
                     nameOfSeller: seller.key.toString(),
                   );
                 },
-                // openBuilder: (BuildContext context, fn) => DetailedPage(
-                //   documentReference: seller.value['docRef'],
-                //   imageSrc: seller.value['photoUrl'],
-                // ),
-                openBuilder: (BuildContext context, fn) => PlaceOrderScreen(
+                openBuilder: (BuildContext context, fn) => DetailedPage(
                   documentReference: seller.value['docRef'],
+                  imageSrc: seller.value['photoUrl'],
                 ),
+                // openBuilder: (BuildContext context, fn) => PlaceOrderScreen(
+                //   documentReference: seller.value['docRef'],
+                // ),
               );
             },
           );

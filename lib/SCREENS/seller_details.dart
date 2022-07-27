@@ -168,11 +168,11 @@ class _SellerDetailsState extends State<SellerDetails> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18.0),
-              child: Text("Longitude: \t ${position.longitude}"),
+              child: Text("Longitude: ${position.longitude}"),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18.0),
-              child: Text("Latitude: \t ${position.latitude}"),
+              child: Text("Latitude: ${position.latitude}"),
             ),
           ],
         ),

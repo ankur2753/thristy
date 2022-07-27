@@ -5,7 +5,7 @@ import './constants.dart';
 class AppThemeProvider extends ChangeNotifier {
   ThemeData myDarkTheme = ThemeData(
     appBarTheme: const AppBarTheme(centerTitle: true),
-    textTheme: GoogleFonts.muliTextTheme(
+    textTheme: GoogleFonts.workSansTextTheme(
       ThemeData(brightness: Brightness.dark).textTheme,
     ),
     colorScheme: const ColorScheme(
@@ -26,6 +26,9 @@ class AppThemeProvider extends ChangeNotifier {
 
   ThemeData myThemeLight = ThemeData(
     cardColor: const Color(0xFFFFFFFF),
+    textTheme: GoogleFonts.workSansTextTheme(
+      ThemeData(brightness: Brightness.light).textTheme,
+    ),
     colorScheme: const ColorScheme(
       brightness: Brightness.light,
       primary: kBlue,

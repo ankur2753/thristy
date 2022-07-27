@@ -17,8 +17,6 @@ class SuccesScreen extends StatelessWidget {
         title: const Text("Successfull"),
         backgroundColor: Colors.green,
         // TODO: change color back to normal after this screen
-        systemOverlayStyle:
-            const SystemUiOverlayStyle(statusBarColor: Colors.green),
       ),
       body: Column(mainAxisSize: MainAxisSize.max, children: [
         Expanded(
