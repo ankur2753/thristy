@@ -7,6 +7,20 @@ import 'package:flutter/material.dart';
 class DatabaseServiesProvider extends ChangeNotifier {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   final User _user = FirebaseAuth.instance.currentUser!;
+
+  //***************************************************** //
+  // TODO : REMOVE ON DEPLOYMENT
+  static bool _isCust = true;
+
+  set userType(bool value) {
+    _isCust = value;
+    notifyListeners();
+  }
+
+  bool get isCustomer => _isCust;
+
+  // *****************************************************************//
+
   // TODO: store user data locally for less calls to the server
 
   // userMetaData SECTION
@@ -53,17 +67,46 @@ class DatabaseServiesProvider extends ChangeNotifier {
     _db.collection('userMetaData').doc(_user.uid).update({'phone no': phone});
   }
 
+  //==========================================================================//
   // ORDERS SECTION
+  // Future addOrder({
+  //   required DocumentReference documentReference,
+  //   required String shopName,
+  //   required int quantity,
+  //   required num finalPrice,
+  // }) async {
+  //   return _db.collection('orderBook').doc(_user.uid).set(
+  //     {
+  //       DateTime.now().toLocal().toString(): {
+  //         'docRef': documentReference,
+  //         'shopName': shopName,
+  //         'quantity': quantity,
+  //         'price': finalPrice,
+  //       },
+  //     },
+  //     SetOptions(merge: true),
+  //   );
+  // }
   Future addOrder({
-    required DocumentReference documentReference,
+    required DocumentReference shopReference,
     required String shopName,
     required int quantity,
     required num finalPrice,
   }) async {
+    DocumentReference ref = await _db.collection('allOrder').add({
+      DateTime.now().toLocal().toString(): {
+        'docRef': shopReference,
+        'customer': _user.uid,
+        'customerName': _user.displayName,
+        'shopName': shopName,
+        'quantity': quantity,
+        'price': finalPrice,
+      },
+    });
     return _db.collection('orderBook').doc(_user.uid).set(
       {
         DateTime.now().toLocal().toString(): {
-          'docRef': documentReference,
+          'docRef': ref,
           'shopName': shopName,
           'quantity': quantity,
           'price': finalPrice,
@@ -107,6 +150,7 @@ class DatabaseServiesProvider extends ChangeNotifier {
     await documentReference.update({'delivered': true});
   }
 
+  //==========================================================================//
   // ADDRESS SECTION
 
   Future<bool> addAddress({

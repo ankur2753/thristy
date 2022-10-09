@@ -76,49 +76,53 @@ class SellerCard extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          SizedBox(
-            height: 250,
-            width: 200,
-            child: Card(
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10))),
-              elevation: 9,
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              child: Image.network(
-                src,
-                fit: BoxFit.fitWidth,
-                loadingBuilder: (BuildContext ctx, Widget child,
-                    ImageChunkEvent? progress) {
-                  if (progress == null) {
-                    return child;
-                  }
-                  return const Padding(
-                    padding: EdgeInsets.all(18.0),
-                    child: Center(
-                        child: LinearProgressIndicator(
-                      color: kWhiteBlue,
-                    )),
-                  );
-                },
-              ),
+    return Row(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: CircleAvatar(
+            maxRadius: MediaQuery.of(context).size.width / 6,
+            backgroundImage: NetworkImage(
+              src,
+              // fit: BoxFit.fitWidth,
+              // loadingBuilder: (BuildContext ctx, Widget child,
+              //     ImageChunkEvent? progress) {
+              //   if (progress == null) {
+              //     return child;
+              //   }
+              //   return const Padding(
+              //     padding: EdgeInsets.all(18.0),
+              //     child: Center(
+              //         child: LinearProgressIndicator(
+              //       color: kWhiteBlue,
+              //     )),
+              //   );
+              // },
             ),
           ),
-          Column(
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 8),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                nameOfSeller,
-                style: Theme.of(context).textTheme.titleLarge,
+              Flexible(
+                fit: FlexFit.loose,
+                child: Text(
+                  nameOfSeller,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge
+                      ?.copyWith(fontWeight: FontWeight.bold),
+                ),
               ),
-              Text(location),
+              Flexible(fit: FlexFit.loose, child: Text(location)),
             ],
-          )
-        ],
-      ),
+          ),
+        )
+      ],
     );
   }
 }

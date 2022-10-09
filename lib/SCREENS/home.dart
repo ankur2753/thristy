@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:thristy/screens/seller_home.dart';
+import 'package:thristy/screens/seller_orders.dart';
 import 'package:thristy/screens/shop.dart';
 import 'package:thristy/screens/profile.dart';
 import 'package:thristy/screens/stats.dart';
@@ -22,8 +24,8 @@ class _HomeState extends State<Home> {
     ProfileScreen()
   ];
   final List _containers2 = const <Widget>[
-    StatsScreen(),
-    ShopsListScreen(),
+    SellerHome(),
+    SellerOrdersScreen(),
     ProfileScreen(),
   ];
   @override
@@ -41,13 +43,17 @@ class _HomeState extends State<Home> {
             child: child,
           );
         },
-        child: FutureBuilder<bool>(
-          future:
-              Provider.of<DatabaseServiesProvider>(context).isUserCustomer(),
-          builder: (context, snapshot) => snapshot.hasData && snapshot.data!
-              ? _containers.elementAt(_selectedPage)
-              : _containers2.elementAt(_selectedPage),
-        ),
+        // child: FutureBuilder<bool>(
+        //   future:
+        //       Provider.of<DatabaseServiesProvider>(context).isUserCustomer(),
+        //   builder: (context, snapshot) => snapshot.hasData && snapshot.data!
+        //       ? _containers.elementAt(_selectedPage)
+        //       : _containers2.elementAt(_selectedPage),
+        // ),
+        child: Provider.of<DatabaseServiesProvider>(context, listen: true)
+                .isCustomer
+            ? _containers.elementAt(_selectedPage)
+            : _containers2.elementAt(_selectedPage),
       ),
       bottomNavigationBar: BottomNavigationBar(
         showUnselectedLabels: false,

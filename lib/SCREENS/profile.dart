@@ -93,6 +93,16 @@ class ProfileScreen extends StatelessWidget {
                     builder: (BuildContext contex) => const SellerDetails()));
           },
         ),
+        SwitchListTile(
+          activeColor: Colors.lime,
+          title: const Text("isCustomer"),
+          subtitle: const Text("remove after testing"),
+          value: Provider.of<DatabaseServiesProvider>(context).isCustomer,
+          onChanged: (value) {
+            Provider.of<DatabaseServiesProvider>(context, listen: false)
+                .userType = value;
+          },
+        ),
         ListTile(
           title: const Text("Rate on Play Store"),
           trailing: const Icon(Icons.navigate_next),

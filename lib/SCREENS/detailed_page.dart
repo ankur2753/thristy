@@ -71,7 +71,7 @@ class _DetailedPageState extends State<DetailedPage> {
                     (context, index) => Column(
                       children: [
                         ListTile(
-                          title: const Text("Location"),
+                          title: const Text("Seller's Location"),
                           subtitle: const Text("See on Map"),
                           trailing: const Icon(Icons.navigate_next),
                           onTap: () => Navigator.push(
@@ -87,12 +87,20 @@ class _DetailedPageState extends State<DetailedPage> {
                           ),
                         ),
                         ListTile(
-                          title: const Text("Outlet at"),
-                          subtitle: Text(snapshot.data['location']),
-                        ),
-                        const ListTile(
-                          title: Text("Deliver at"),
-                          trailing: Text("home"),
+                          title: const Text("Delivering at"),
+                          subtitle: Text("home"),
+                          trailing: const Icon(Icons.navigate_next),
+                          onTap: () => Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => SeeLocation(
+                                position: LatLng(
+                                    snapshot.data['position'].latitude,
+                                    snapshot.data['position'].longitude),
+                                shopName: snapshot.data['shopName'],
+                              ),
+                            ),
+                          ),
                         ),
                         ListTile(
                           title: const Text("Bottle"),

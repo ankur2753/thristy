@@ -233,7 +233,7 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
             onPressed: () {
               Provider.of<DatabaseServiesProvider>(context, listen: false)
                   .addOrder(
-                      documentReference: widget.documentReference,
+                      shopReference: widget.documentReference,
                       quantity: bottles,
                       finalPrice: (snapshot.data!['bottlePrice'] +
                               snapshot.data!['deliveryRate']) *
