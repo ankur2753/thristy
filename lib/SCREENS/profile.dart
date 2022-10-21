@@ -5,7 +5,7 @@ import 'package:thristy/screens/address_book.dart';
 import 'package:thristy/screens/login.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:thristy/screens/seller_details.dart';
+import 'package:thristy/screens/customer/seller_details.dart';
 import 'package:thristy/screens/your_orders.dart';
 import 'package:thristy/services/auth.dart';
 import 'package:thristy/screens/success_msg.dart';

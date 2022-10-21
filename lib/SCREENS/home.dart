@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:thristy/screens/seller_home.dart';
-import 'package:thristy/screens/seller_orders.dart';
-import 'package:thristy/screens/shop.dart';
+import 'package:thristy/screens/seller/seller_home.dart';
+import 'package:thristy/screens/seller/seller_orders.dart';
+import 'package:thristy/screens/customer/shop.dart';
 import 'package:thristy/screens/profile.dart';
 import 'package:thristy/screens/stats.dart';
 import 'package:animations/animations.dart';
