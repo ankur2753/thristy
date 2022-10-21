@@ -101,6 +101,7 @@ class DatabaseServiesProvider extends ChangeNotifier {
         'shopName': shopName,
         'quantity': quantity,
         'price': finalPrice,
+        'timestamp':DateTime.now().toLocal().toString(),
       },
     });
     return _db.collection('orderBook').doc(_user.uid).set(
@@ -121,8 +122,8 @@ class DatabaseServiesProvider extends ChangeNotifier {
   }
 
   Future<Object> getOrderDetails({required DocumentReference orderDoc}) async {
-    DocumentSnapshot snapshot = await orderDoc.get();
-    return snapshot.data() ?? {};
+    DocumentSnapshot res = await orderDoc.get();
+    return res.data() ?? {};
   }
 
   Future<DocumentReference> newOrder({

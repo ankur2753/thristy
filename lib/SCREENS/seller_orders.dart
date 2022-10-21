@@ -79,6 +79,12 @@ class SellerOrdersScreen extends StatelessWidget {
                     );
                   },
                 ),
+                const Center(
+                  child: Text("All Pending Here"),
+                ),
+                const Center(
+                  child: Text("All Completed Here"),
+                ),
               ]);
             }),
       ),
