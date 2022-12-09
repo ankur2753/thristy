@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:thristy/screens/detailed_page.dart';
+import 'package:thristy/screens/customer/detailed_page.dart';
 import 'package:thristy/screens/see_location.dart';
 import 'package:thristy/screens/success_msg.dart';
 import 'package:thristy/services/database.dart';

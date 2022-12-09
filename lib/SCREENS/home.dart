@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:thristy/screens/seller/seller_home.dart';
+import 'package:thristy/screens/seller/stats.dart';
 import 'package:thristy/screens/seller/seller_orders.dart';
 import 'package:thristy/screens/customer/shop.dart';
 import 'package:thristy/screens/profile.dart';
-import 'package:thristy/screens/stats.dart';
+import 'package:thristy/screens/customer/stats.dart';
 import 'package:animations/animations.dart';
 import 'package:thristy/services/database.dart';
 
@@ -18,12 +18,12 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _selectedPage = 0;
 
-  final List _containers = const <Widget>[
+  final List customer = const <Widget>[
     StatsScreen(),
     ShopsListScreen(),
     ProfileScreen()
   ];
-  final List _containers2 = const <Widget>[
+  final List seller = const <Widget>[
     SellerHome(),
     SellerOrdersScreen(),
     ProfileScreen(),
@@ -44,16 +44,22 @@ class _HomeState extends State<Home> {
           );
         },
         // child: FutureBuilder<bool>(
-        //   future:
-        //       Provider.of<DatabaseServiesProvider>(context).isUserCustomer(),
-        //   builder: (context, snapshot) => snapshot.hasData && snapshot.data!
-        //       ? _containers.elementAt(_selectedPage)
-        //       : _containers2.elementAt(_selectedPage),
-        // ),
+        //     initialData: true,
+        //     future:
+        //         Provider.of<DatabaseServiesProvider>(context).isUserCustomer(),
+        //     builder: (context, snapshot) {
+        //       if (!snapshot.hasData) {
+        //         return const Center(
+        //             child: CircularProgressIndicator.adaptive());
+        //       }
+        //       return snapshot.data!
+        //           ? customer.elementAt(_selectedPage)
+        //           : seller.elementAt(_selectedPage);
+        //     }),
         child: Provider.of<DatabaseServiesProvider>(context, listen: true)
                 .isCustomer
-            ? _containers.elementAt(_selectedPage)
-            : _containers2.elementAt(_selectedPage),
+            ? customer.elementAt(_selectedPage)
+            : seller.elementAt(_selectedPage),
       ),
       bottomNavigationBar: BottomNavigationBar(
         showUnselectedLabels: false,
